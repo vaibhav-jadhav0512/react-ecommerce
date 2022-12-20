@@ -9,11 +9,12 @@ import {
 import { Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import firebase from "firebase/compat/app";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
   const [current, setCurrent] = useState("");
+  let { user } = useSelector((state) => ({ ...state }));
   const onClick = (e) => {
     setCurrent(e.key);
     navigate(e.key);
@@ -32,10 +33,11 @@ const Header = () => {
       key: "/",
       icon: <HomeOutlined />,
     },
-    {
-      label: "Options",
+    user && {
+      label: user.email.split("@")[0],
       key: "SubMenu",
       icon: <SettingOutlined />,
+      className: "float-end",
       children: [
         {
           label: "Option 1",
@@ -53,16 +55,16 @@ const Header = () => {
         },
       ],
     },
-    {
-      label: "Login",
-      key: "login",
-      icon: <LoginOutlined />,
-      className: "float-end",
-    },
-    {
+    !user && {
       label: "Register",
       key: "register",
       icon: <FormOutlined />,
+      className: "float-end",
+    },
+    !user && {
+      label: "Login",
+      key: "login",
+      icon: <LoginOutlined />,
       className: "float-end",
     },
   ];
