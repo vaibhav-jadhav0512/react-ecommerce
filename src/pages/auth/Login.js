@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { auth } from "../../firebase";
+import { auth, googleAuthProvider } from "../../firebase";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { GoogleOutlined } from "@ant-design/icons";
 
 const Login = () => {
   const [email, setemail] = useState("vaibhav.jadhav0596@gmail.com");
@@ -30,6 +31,29 @@ const Login = () => {
       toast.error(error.message);
       setloading(false);
     }
+  };
+
+  const googleLoginHandler = async () => {
+    setloading(true);
+    auth
+      .signInWithPopup(googleAuthProvider)
+      .then(async (res) => {
+        const { user } = res;
+        const idTokenResult = await user.getIdTokenResult();
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: {
+            email: user.email,
+            token: idTokenResult.token,
+          },
+        });
+        setloading(false);
+        history("/");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        setloading(false);
+      });
   };
   return (
     <div className="container p-4">
@@ -67,12 +91,22 @@ const Login = () => {
               />
               <button
                 type="submit"
-                className="btn btn-outline-primary mt-3 float-start"
+                className="btn btn-outline-primary float-start my-3 mr-3"
               >
                 Login
               </button>
             </div>
           </form>
+          <div className="row d-block">
+            <hr />
+            <button
+              className="btn btn-outline-danger mt-2 btn-block w-auto"
+              onClick={googleLoginHandler}
+            >
+              <GoogleOutlined />
+              &nbsp;&nbsp;Login with Google
+            </button>
+          </div>
         </div>
       </div>
     </div>
