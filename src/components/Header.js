@@ -6,10 +6,11 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
+import { useNavigate } from "react-router-dom";
 const items = [
   {
     label: "Home",
-    key: "home",
+    key: "/",
     icon: <HomeOutlined />,
   },
   {
@@ -41,10 +42,11 @@ const items = [
   },
 ];
 const Header = () => {
+  const history = useNavigate();
   const [current, setCurrent] = useState("");
   const onClick = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
+    history(e.key);
   };
   return (
     <Menu
