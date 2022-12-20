@@ -1,12 +1,35 @@
 import React, { useState } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
+  const [email, setemail] = useState("vaibhav.jadhav0596@gmail.com");
+  const [password, setpassword] = useState("Vaibhav@123");
+  const [loading, setloading] = useState(false);
+  let dispatch = useDispatch();
+  const history = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      setloading(true);
+      const res = await auth.signInWithEmailAndPassword(email, password.trim());
+      const { user } = res;
+      const idTokenResult = await user.getIdTokenResult();
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload: {
+          email: user.email,
+          token: idTokenResult.token,
+        },
+      });
+      setloading(false);
+      history("/");
+    } catch (error) {
+      toast.error(error.message);
+      setloading(false);
+    }
   };
   return (
     <div className="container p-4">
@@ -15,10 +38,16 @@ const Login = () => {
           className="img-fluid"
           src="/login.jpg"
           alt=""
-          style={{ height: "400px", width: "400px" }}
+          style={{ height: "400px", width: "450px" }}
         />
         <div className="col-md-3 offset-md-1 mt-5">
-          <h4>Login</h4>
+          {!loading ? (
+            <h4>Login</h4>
+          ) : (
+            <div class="spinner-border text-primary mb-3" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          )}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <input
@@ -38,7 +67,7 @@ const Login = () => {
               />
               <button
                 type="submit"
-                className="btn btn-outline-secondary mt-3 float-start"
+                className="btn btn-outline-primary mt-3 float-start"
               >
                 Login
               </button>
