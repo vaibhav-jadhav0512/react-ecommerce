@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth, googleAuthProvider } from "../../firebase";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { GoogleOutlined } from "@ant-design/icons";
 
 const Login = () => {
@@ -11,6 +11,10 @@ const Login = () => {
   const [loading, setloading] = useState(false);
   let dispatch = useDispatch();
   const history = useNavigate();
+  const { user } = useSelector((state) => ({ ...state }));
+  useEffect(() => {
+    if (user && user.token) history("/");
+  }, [user]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -100,13 +104,16 @@ const Login = () => {
           <div className="row d-block">
             <hr />
             <button
-              className="btn btn-outline-danger mt-2 btn-block w-auto"
+              className="btn btn-outline-danger my-3 btn-block w-auto"
               onClick={googleLoginHandler}
             >
               <GoogleOutlined />
               &nbsp;&nbsp;Login with Google
             </button>
           </div>
+          <Link exact to="/forgot/password" className="float-right mt-5">
+            Forgot Password?
+          </Link>
         </div>
       </div>
     </div>
