@@ -34,7 +34,7 @@ const Header = () => {
       icon: <HomeOutlined />,
     },
     user && {
-      label: user.email.split("@")[0],
+      label: user.name,
       key: "SubMenu",
       icon: <SettingOutlined />,
       className: "float-end",

@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleOutlined } from "@ant-design/icons";
-import axios from "axios";
 import { createOrUpdateUser } from "../../functions/auth";
 
 const Login = () => {
