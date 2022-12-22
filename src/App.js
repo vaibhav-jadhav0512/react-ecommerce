@@ -55,6 +55,8 @@ const App = () => {
             element={<RegisterComplete />}
           />
           <Route exact path="/forgot/password" element={<ForgotPassword />} />
+          <Route exact path="/subscriber" element={<Home />} />
+          <Route exact path="/admin/dashboard" element={<Home />} />
         </Routes>
       </Router>
     </>

@@ -4,17 +4,26 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleOutlined } from "@ant-design/icons";
-import { createOrUpdateUser } from "../../functions/auth";
+import { createOrUpdateUser, getUser } from "../../functions/auth";
 
 const Login = () => {
   const [email, setemail] = useState("vaibhav.jadhav0596@gmail.com");
   const [password, setpassword] = useState("Vaibhav@123");
   const [loading, setloading] = useState(false);
   let dispatch = useDispatch();
-  const history = useNavigate();
+  let history = useNavigate();
+  const roleBasedRedirect = (role) => {
+    if (role === "subscriber") {
+      history("/subscriber");
+    } else if (role === "admin") {
+      history("/admin/dashboard");
+    } else {
+      history("/");
+    }
+  };
   const { user } = useSelector((state) => ({ ...state }));
   useEffect(() => {
-    if (user && user.token) history("/");
+    if (user && user.token) roleBasedRedirect(user.role);
   }, [user]);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,20 +35,24 @@ const Login = () => {
       createOrUpdateUser(idTokenResult)
         .then(async (res) => {
           toast.success(`RESPONSE: ${res.data}, STATUS: ${res.status}`);
-          dispatch({
-            type: "LOGGED_IN_USER",
-            payload: {
-              email: user.email,
-              token: idTokenResult.token,
-              uid: user.uid,
-              name: user.name,
-              picture: user.picture,
-              emailVerified: user.emailVerified,
-              role: user.role,
-            },
-          });
-          setloading(false);
-          history("/");
+          getUser(idTokenResult)
+            .then(async (result) => {
+              dispatch({
+                type: "LOGGED_IN_USER",
+                payload: {
+                  email: result.data.email,
+                  token: idTokenResult.token,
+                  uid: result.data.uid,
+                  name: result.data.name,
+                  picture: result.data.picture,
+                  emailVerified: result.data.emailVerified,
+                  role: result.data.role,
+                },
+              });
+              setloading(false);
+              roleBasedRedirect(result.data.role);
+            })
+            .catch(async (err) => toast.error(err.message));
         })
         .catch(async (err) => toast.error(err.message));
     } catch (error) {
@@ -58,20 +71,24 @@ const Login = () => {
         createOrUpdateUser(idTokenResult)
           .then(async (res) => {
             toast.success(`RESPONSE: ${res.data}, STATUS: ${res.status}`);
-            dispatch({
-              type: "LOGGED_IN_USER",
-              payload: {
-                email: user.email,
-                token: idTokenResult.token,
-                uid: user.uid,
-                name: user.name,
-                picture: user.picture,
-                emailVerified: user.emailVerified,
-                role: user.role,
-              },
-            });
-            setloading(false);
-            history("/");
+            getUser(idTokenResult)
+              .then(async (result) => {
+                dispatch({
+                  type: "LOGGED_IN_USER",
+                  payload: {
+                    email: result.data.email,
+                    token: idTokenResult.token,
+                    uid: result.data.uid,
+                    name: result.data.name,
+                    picture: result.data.picture,
+                    emailVerified: result.data.emailVerified,
+                    role: result.data.role,
+                  },
+                });
+                setloading(false);
+                roleBasedRedirect(result.data.role);
+              })
+              .catch(async (err) => toast.error(err.message));
           })
           .catch(async (err) => toast.error(err.message));
       })

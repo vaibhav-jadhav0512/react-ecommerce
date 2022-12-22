@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import { useDispatch } from "react-redux";
 import { createOrUpdateUser } from "../../functions/auth";
 
 const RegisterComplete = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const history = useNavigate();
-  const { user } = useSelector((state) => ({ ...state }));
-  const [loading, setloading] = useState(false);
   let dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +38,6 @@ const RegisterComplete = () => {
                 role: user.role,
               },
             });
-            setloading(false);
             history("/");
           })
           .catch(async (err) => toast.error(err.message));

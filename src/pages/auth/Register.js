@@ -8,8 +8,17 @@ const Register = () => {
   const [email, setemail] = useState("");
   const history = useNavigate();
   const { user } = useSelector((state) => ({ ...state }));
+  const roleBasedRedirect = (role) => {
+    if (role === "subscriber") {
+      history("/subscriber");
+    } else if (role === "admin") {
+      history("/admin/dashboard");
+    } else {
+      history("/");
+    }
+  };
   useEffect(() => {
-    if (user && user.token) history("/");
+    if (user && user.token) roleBasedRedirect(user.role);
   }, [user]);
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -10,7 +10,7 @@ export const createOrUpdateUser = async (idTokenResult) => {
 
 export const getUser = async (idTokenResult) => {
   return await axios.post(
-    `${process.env.REACT_APP_BACKEND_API}/get/user/email`,
+    `${process.env.REACT_APP_BACKEND_API}/get/user`,
     {},
     { headers: { Authorization: `Bearer ${idTokenResult.token}` } }
   );
