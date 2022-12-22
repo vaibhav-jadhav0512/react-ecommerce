@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { createOrUpdateUser } from "../../functions/auth";
 
 const Login = () => {
   const [email, setemail] = useState("vaibhav.jadhav0596@gmail.com");
@@ -23,12 +24,7 @@ const Login = () => {
       const res = await auth.signInWithEmailAndPassword(email, password.trim());
       const { user } = res;
       const idTokenResult = await user.getIdTokenResult();
-      await axios
-        .post(
-          `${process.env.REACT_APP_BACKEND_API}/user/create-update`,
-          {},
-          { headers: { Authorization: `Bearer ${idTokenResult.token}` } }
-        )
+      createOrUpdateUser(idTokenResult)
         .then(async (res) => {
           toast.success(`RESPONSE: ${res.data}, STATUS: ${res.status}`);
           dispatch({
@@ -60,12 +56,7 @@ const Login = () => {
       .then(async (res) => {
         const { user } = res;
         const idTokenResult = await user.getIdTokenResult();
-        await axios
-          .post(
-            `${process.env.REACT_APP_BACKEND_API}/user/create-update`,
-            {},
-            { headers: { Authorization: `Bearer ${idTokenResult.token}` } }
-          )
+        createOrUpdateUser(idTokenResult)
           .then(async (res) => {
             toast.success(`RESPONSE: ${res.data}, STATUS: ${res.status}`);
             dispatch({
