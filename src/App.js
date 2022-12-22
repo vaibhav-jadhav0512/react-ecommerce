@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { auth } from "./firebase";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import { getUser } from "./functions/auth";
+import History from "./pages/user/History";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const App = () => {
             element={<RegisterComplete />}
           />
           <Route exact path="/forgot/password" element={<ForgotPassword />} />
-          <Route exact path="/subscriber" element={<Home />} />
+          <Route exact path="/user/history" element={<History />} />
           <Route exact path="/admin/dashboard" element={<Home />} />
         </Routes>
       </Router>

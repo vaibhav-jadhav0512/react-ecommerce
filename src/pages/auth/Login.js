@@ -7,14 +7,14 @@ import { GoogleOutlined } from "@ant-design/icons";
 import { createOrUpdateUser, getUser } from "../../functions/auth";
 
 const Login = () => {
-  const [email, setemail] = useState("vaibhav.jadhav0596@gmail.com");
-  const [password, setpassword] = useState("Vaibhav@123");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
   const [loading, setloading] = useState(false);
   let dispatch = useDispatch();
   let history = useNavigate();
   const roleBasedRedirect = (role) => {
     if (role === "subscriber") {
-      history("/subscriber");
+      history("/user/history");
     } else if (role === "admin") {
       history("/admin/dashboard");
     } else {
@@ -24,6 +24,7 @@ const Login = () => {
   const { user } = useSelector((state) => ({ ...state }));
   useEffect(() => {
     if (user && user.token) roleBasedRedirect(user.role);
+    // eslint-disable-next-line
   }, [user]);
   const handleSubmit = async (e) => {
     e.preventDefault();

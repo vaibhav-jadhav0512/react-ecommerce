@@ -10,7 +10,7 @@ const Register = () => {
   const { user } = useSelector((state) => ({ ...state }));
   const roleBasedRedirect = (role) => {
     if (role === "subscriber") {
-      history("/subscriber");
+      history("/user/history");
     } else if (role === "admin") {
       history("/admin/dashboard");
     } else {
@@ -19,6 +19,7 @@ const Register = () => {
   };
   useEffect(() => {
     if (user && user.token) roleBasedRedirect(user.role);
+    // eslint-disable-next-line
   }, [user]);
   const handleSubmit = async (e) => {
     e.preventDefault();
