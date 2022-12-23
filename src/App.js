@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import Header from "./components/Header";
+import Header from "./components/nav/Header";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RegisterComplete from "./pages/auth/RegisterComplete";
@@ -12,6 +12,7 @@ import { auth } from "./firebase";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import { getUser } from "./functions/auth";
 import History from "./pages/user/History";
+import UserRoute from "./components/routes/UserRoute";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -56,7 +57,14 @@ const App = () => {
             element={<RegisterComplete />}
           />
           <Route exact path="/forgot/password" element={<ForgotPassword />} />
-          <Route exact path="/user/history" element={<History />} />
+          <Route
+            path="/user/history/*"
+            element={
+              <UserRoute>
+                <History />
+              </UserRoute>
+            }
+          />
           <Route exact path="/admin/dashboard" element={<Home />} />
         </Routes>
       </Router>
