@@ -10,7 +10,7 @@ const LoadingToRedirect = () => {
     }, 1000);
     count === 0 && history("/");
     return () => clearInterval(interval);
-  }, [count]);
+  }, [count, history]);
   return (
     <div className="container p-5 text-center">
       <p>Redirecting you in {count} seconds...❤</p>
