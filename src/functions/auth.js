@@ -15,3 +15,10 @@ export const getUser = async (idTokenResult) => {
     { headers: { Authorization: `Bearer ${idTokenResult.token}` } }
   );
 };
+export const getAdmin = async (token) => {
+  return await axios.post(
+    `${process.env.REACT_APP_BACKEND_API}/get/admin`,
+    {},
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+};

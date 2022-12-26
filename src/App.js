@@ -15,6 +15,8 @@ import History from "./pages/user/History";
 import UserRoute from "./components/routes/UserRoute";
 import Password from "./pages/user/Password";
 import WishList from "./pages/user/WishList";
+import AdminRoute from "./components/routes/AdminRoute";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -64,7 +66,9 @@ const App = () => {
             <Route path="/user/password" element={<Password />} />
             <Route path="/user/wishlist" element={<WishList />} />
           </Route>
-          <Route exact path="/admin/dashboard" element={<Home />} />
+          <Route element={<AdminRoute />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          </Route>
         </Routes>
       </Router>
     </>
