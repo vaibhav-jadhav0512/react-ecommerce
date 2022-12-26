@@ -39,14 +39,16 @@ const Header = () => {
       icon: <SettingOutlined />,
       className: "float-end",
       children: [
-        {
-          label: "Option 1",
-          key: "setting:1",
-        },
-        {
-          label: "Option 2",
-          key: "setting:2",
-        },
+        user &&
+          user.role === "admin" && {
+            label: "Dashboard",
+            key: "/admin/dashboard",
+          },
+        user &&
+          user.role === "subscriber" && {
+            label: "Dashboard",
+            key: "/user/history",
+          },
         {
           label: "Logout",
           key: "/login",
