@@ -19,6 +19,8 @@ import AdminRoute from "./components/routes/AdminRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CreateCategory from "./pages/admin/category/CreateCategory";
 import UpdateCategory from "./pages/admin/category/UpdateCategory";
+import CreateSubCategory from "./pages/admin/sub-category/CreateSubCategory";
+import UpdateSubCategory from "./pages/admin/sub-category/UpdateSubCategory";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -72,6 +74,11 @@ const App = () => {
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/category" element={<CreateCategory />} />
             <Route path="/admin/category/:slug" element={<UpdateCategory />} />
+            <Route
+              path="/admin/sub-category/:slug"
+              element={<UpdateSubCategory />}
+            />
+            <Route path="/admin/sub-category" element={<CreateSubCategory />} />
           </Route>
         </Routes>
       </Router>
