@@ -17,6 +17,8 @@ import Password from "./pages/user/Password";
 import WishList from "./pages/user/WishList";
 import AdminRoute from "./components/routes/AdminRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import CreateCategory from "./pages/admin/category/CreateCategory";
+import UpdateCategory from "./pages/admin/category/UpdateCategory";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -68,6 +70,8 @@ const App = () => {
           </Route>
           <Route element={<AdminRoute />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/category" element={<CreateCategory />} />
+            <Route path="/admin/category/:slug" element={<UpdateCategory />} />
           </Route>
         </Routes>
       </Router>

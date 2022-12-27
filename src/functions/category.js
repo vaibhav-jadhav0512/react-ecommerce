@@ -13,21 +13,21 @@ export const getCategory = async (slug) => {
 export const saveCategory = async (token, category) => {
   return await axios.post(
     `${process.env.REACT_APP_BACKEND_API}/category/save`,
-    { category },
+    category,
     { headers: { Authorization: `Bearer ${token}` } }
   );
 };
 export const removeCategory = async (token, slug) => {
   return await axios.delete(
     `${process.env.REACT_APP_BACKEND_API}/category/delete/${slug}`,
-    {},
-    { headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` } },
+    {}
   );
 };
 export const updateCategory = async (token, category) => {
   return await axios.put(
     `${process.env.REACT_APP_BACKEND_API}/category/update`,
-    { category },
+    category,
     { headers: { Authorization: `Bearer ${token}` } }
   );
 };
