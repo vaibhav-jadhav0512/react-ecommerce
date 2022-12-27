@@ -11,6 +11,7 @@ import {
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import CategoryForm from "../../../components/forms/CategoryForm";
 import LocalSearch from "../../../components/forms/LocalSearch";
+import { searched } from "../../../functions/search";
 
 const CreateCategory = () => {
   const [name, setname] = useState("");
@@ -63,8 +64,6 @@ const CreateCategory = () => {
       });
   };
 
-  const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -84,7 +83,6 @@ const CreateCategory = () => {
             name={name}
             setname={setname}
           />
-          <hr />
           <LocalSearch keyword={keyword} setkeyword={setkeyword} />
           <div className="row">
             {categories.filter(searched(keyword)).map((c) => (
