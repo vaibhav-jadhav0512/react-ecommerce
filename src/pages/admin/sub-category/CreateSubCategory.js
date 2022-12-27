@@ -17,8 +17,8 @@ import { getAllCategories } from "../../../functions/category";
 const CreateSubCategory = () => {
   const [name, setname] = useState("");
   const [loading, setloading] = useState(false);
-  const [categories, setcategories] = useState([]);
   const [subcategories, setsubcategories] = useState([]);
+  const [categories, setcategories] = useState([]);
   const [category, setcategory] = useState("");
   const [keyword, setkeyword] = useState("");
   const { user } = useSelector((state) => ({ ...state }));
@@ -111,6 +111,7 @@ const CreateSubCategory = () => {
             handleSubmit={handleSubmit}
             name={name}
             setname={setname}
+            update={false}
           />
           <LocalSearch keyword={keyword} setkeyword={setkeyword} />
           <div className="row">

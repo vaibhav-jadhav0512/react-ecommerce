@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import CategoryForm from "../../../components/forms/CategoryForm";
 import AdminNav from "../../../components/nav/AdminNav";
-import { getCategory, updateCategory } from "../../../functions/category";
+import { getAllCategories } from "../../../functions/category";
 import {
   getSubCategory,
   updateSubCategory,
@@ -15,11 +15,17 @@ const UpdateSubCategory = () => {
   const [loading, setloading] = useState(false);
   const { slug } = useParams();
   const { user } = useSelector((state) => ({ ...state }));
+  const [categories, setcategories] = useState([]);
+  const [category, setcategory] = useState("");
+  const [parent, setparent] = useState("");
   const history = useNavigate();
   useEffect(() => {
     const loadCategory = async () => {
+      await getAllCategories().then((c) => setcategories(c.data));
       await getSubCategory(slug).then((res) => {
         setname(res.data.name);
+        setparent(res.data.parent);
+        setcategory(res.data.parent);
       });
     };
     loadCategory();
@@ -28,7 +34,7 @@ const UpdateSubCategory = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setloading(true);
-    updateSubCategory(user.token, { name, slug, parent: "react" })
+    updateSubCategory(user.token, { name, slug, parent: category })
       .then(async (res) => {
         setloading(false);
         toast.success("Category updated successfully");
@@ -53,6 +59,26 @@ const UpdateSubCategory = () => {
           ) : (
             <h4>Update Sub Category</h4>
           )}
+          <div className="form-group">
+            <label className="my-2" htmlFor="category">
+              Parent Category
+            </label>
+            <select
+              className="form-select my-2"
+              name="category"
+              id="category"
+              value={category}
+              onChange={(e) => setcategory(e.target.value)}
+            >
+              <option value={parent}>{parent}</option>
+              {categories.length > 0 &&
+                categories.map((c) => (
+                  <option key={c.slug} value={c.slug}>
+                    {c.name}
+                  </option>
+                ))}
+            </select>
+          </div>
           <CategoryForm
             handleSubmit={handleSubmit}
             name={name}

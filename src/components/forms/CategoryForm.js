@@ -27,7 +27,11 @@ const CategoryForm = ({ handleSubmit, name, setname, cancel, history }) => {
         {cancel && (
           <button
             className="btn btn-outline-warning my-2 mx-2"
-            onClick={() => history("/admin/category")}
+            onClick={() => {
+              !cancel
+                ? history("/admin/category")
+                : history("/admin/sub-category");
+            }}
           >
             Cancel
           </button>
