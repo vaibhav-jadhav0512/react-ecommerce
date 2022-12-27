@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import CategoryForm from "../../../components/forms/CategoryForm";
 import AdminNav from "../../../components/nav/AdminNav";
 import { getCategory, updateCategory } from "../../../functions/category";
 
@@ -12,13 +13,13 @@ const UpdateCategory = () => {
   const { user } = useSelector((state) => ({ ...state }));
   const history = useNavigate();
   useEffect(() => {
+    const loadCategory = async () => {
+      await getCategory(slug).then((res) => {
+        setname(res.data.name);
+      });
+    };
     loadCategory();
-  }, []);
-  const loadCategory = async () => {
-    await getCategory(slug).then((res) => {
-      setname(res.data.name);
-    });
-  };
+  }, [slug]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,24 +49,13 @@ const UpdateCategory = () => {
           ) : (
             <h4>Update Category</h4>
           )}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                className="form-control my-2"
-                id="name"
-                value={name}
-                onChange={(e) => setname(e.target.value)}
-                autoFocus
-                required
-                minLength={3}
-              />
-              <button className="btn btn-outline-primary my-2" type="submit">
-                Update
-              </button>
-            </div>
-          </form>
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setname={setname}
+            cancel={true}
+            history={history}
+          />
         </div>
       </div>
     </div>

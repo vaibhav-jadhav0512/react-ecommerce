@@ -9,6 +9,7 @@ import {
   saveCategory,
 } from "../../../functions/category";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import CategoryForm from "../../../components/forms/CategoryForm";
 
 const CreateCategory = () => {
   const [name, setname] = useState("");
@@ -73,24 +74,11 @@ const CreateCategory = () => {
           ) : (
             <h4>Create Category</h4>
           )}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                className="form-control my-2"
-                id="name"
-                value={name}
-                onChange={(e) => setname(e.target.value)}
-                autoFocus
-                required
-                minLength={3}
-              />
-              <button className="btn btn-outline-primary my-2" type="submit">
-                Create
-              </button>
-            </div>
-          </form>
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setname={setname}
+          />
           <hr />
           <div className="row">
             {categories.map((c) => (
