@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import AdminNav from "../../../components/nav/AdminNav";
 import { saveProduct } from "../../../functions/product";
 
 const CreateProduct = () => {
-  const [values, setvalues] = useState({
+  const value = {
     title: "",
     description: "",
     price: "",
@@ -19,7 +20,8 @@ const CreateProduct = () => {
     brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
     colour: "",
     brand: "",
-  });
+  };
+  const [values, setvalues] = useState(value);
   const {
     title,
     description,
@@ -43,7 +45,11 @@ const CreateProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     saveProduct(user.token, values)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        console.log(res.data);
+        toast.success(`Product "${res.data.title}" is created`);
+        setvalues(value);
+      })
       .catch((err) => console.log(err));
   };
 
