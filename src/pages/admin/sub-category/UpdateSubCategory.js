@@ -70,10 +70,14 @@ const UpdateSubCategory = () => {
               value={category}
               onChange={(e) => setcategory(e.target.value)}
             >
-              <option value={parent}>{parent}</option>
+              <option value="">--SELECT--</option>
               {categories.length > 0 &&
                 categories.map((c) => (
-                  <option key={c.slug} value={c.slug}>
+                  <option
+                    key={c.slug}
+                    value={c.slug}
+                    selected={c.parent === parent}
+                  >
                     {c.name}
                   </option>
                 ))}

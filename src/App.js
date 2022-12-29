@@ -21,6 +21,7 @@ import CreateCategory from "./pages/admin/category/CreateCategory";
 import UpdateCategory from "./pages/admin/category/UpdateCategory";
 import CreateSubCategory from "./pages/admin/sub-category/CreateSubCategory";
 import UpdateSubCategory from "./pages/admin/sub-category/UpdateSubCategory";
+import CreateProduct from "./pages/admin/product/CreateProduct";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -79,6 +80,7 @@ const App = () => {
               element={<UpdateSubCategory />}
             />
             <Route path="/admin/sub-category" element={<CreateSubCategory />} />
+            <Route path="/admin/product" element={<CreateProduct />} />
           </Route>
         </Routes>
       </Router>
