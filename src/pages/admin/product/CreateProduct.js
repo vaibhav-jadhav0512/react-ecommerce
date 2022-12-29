@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import ProductForm from "../../../components/forms/ProductForm";
 import AdminNav from "../../../components/nav/AdminNav";
 import { saveProduct } from "../../../functions/product";
 
@@ -22,22 +23,6 @@ const CreateProduct = () => {
     brand: "",
   };
   const [values, setvalues] = useState(value);
-  const {
-    title,
-    description,
-    price,
-    category,
-    categories,
-    subCategories,
-    subCategory,
-    shipping,
-    quantity,
-    images,
-    colours,
-    brands,
-    colour,
-    brand,
-  } = values;
   const { user } = useSelector((state) => ({ ...state }));
   const handleChange = (e) => {
     setvalues({ ...values, [e.target.name]: e.target.value });
@@ -61,100 +46,11 @@ const CreateProduct = () => {
         </div>
         <div className="col-md-3">
           <h4 className="my-3">Create Product</h4>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                className="form-control my-2"
-                value={title}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
-              <input
-                type="text"
-                name="description"
-                id="description"
-                className="form-control my-2"
-                value={description}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="price">Price</label>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                className="form-control my-2"
-                value={price}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="shipping">Shipping</label>
-              <select
-                name="shipping"
-                className="form-select my-2"
-                onChange={handleChange}
-              >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="quantity">Quantity</label>
-              <input
-                type="number"
-                name="quantity"
-                id="quantity"
-                className="form-control my-2"
-                value={quantity}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="colour">Colour</label>
-              <select
-                name="colour"
-                className="form-select my-2"
-                onChange={handleChange}
-              >
-                <option>Select colour</option>
-                {colours.map((c) => {
-                  return (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="colour">Brand</label>
-              <select
-                name="brand"
-                className="form-select my-2"
-                onChange={handleChange}
-              >
-                <option>Select brand</option>
-                {brands.map((c) => {
-                  return (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <button className="btn btn-outline-info my-2" type="submit">
-              Save
-            </button>
-          </form>
+          <ProductForm
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            values={values}
+          />
         </div>
       </div>
     </div>
