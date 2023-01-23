@@ -10,6 +10,11 @@ export const getCategory = async (slug) => {
     `${process.env.REACT_APP_BACKEND_API}/get/category/${slug}`
   );
 };
+export const getSubCategoriesParent = async (parent) => {
+  return await axios.get(
+    `${process.env.REACT_APP_BACKEND_API}/get/sub-category/parent/${parent}`
+  );
+};
 export const saveCategory = async (token, category) => {
   return await axios.post(
     `${process.env.REACT_APP_BACKEND_API}/category/save`,
