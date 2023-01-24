@@ -22,6 +22,7 @@ import UpdateCategory from "./pages/admin/category/UpdateCategory";
 import CreateSubCategory from "./pages/admin/sub-category/CreateSubCategory";
 import UpdateSubCategory from "./pages/admin/sub-category/UpdateSubCategory";
 import CreateProduct from "./pages/admin/product/CreateProduct";
+import AllProducts from "./pages/admin/product/AllProducts";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -67,20 +68,30 @@ const App = () => {
           />
           <Route exact path="/forgot/password" element={<ForgotPassword />} />
           <Route element={<UserRoute />}>
-            <Route path="/user/history" element={<History />} />
-            <Route path="/user/password" element={<Password />} />
-            <Route path="/user/wishlist" element={<WishList />} />
+            <Route exact path="/user/history" element={<History />} />
+            <Route exact path="/user/password" element={<Password />} />
+            <Route exact path="/user/wishlist" element={<WishList />} />
           </Route>
           <Route element={<AdminRoute />}>
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/category" element={<CreateCategory />} />
-            <Route path="/admin/category/:slug" element={<UpdateCategory />} />
+            <Route exact path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route exact path="/admin/category" element={<CreateCategory />} />
             <Route
+              exact
+              path="/admin/category/:slug"
+              element={<UpdateCategory />}
+            />
+            <Route
+              exact
               path="/admin/sub-category/:slug"
               element={<UpdateSubCategory />}
             />
-            <Route path="/admin/sub-category" element={<CreateSubCategory />} />
-            <Route path="/admin/product" element={<CreateProduct />} />
+            <Route
+              exact
+              path="/admin/sub-category"
+              element={<CreateSubCategory />}
+            />
+            <Route exact path="/admin/product" element={<CreateProduct />} />
+            <Route exact path="/admin/products" element={<AllProducts />} />
           </Route>
         </Routes>
       </Router>

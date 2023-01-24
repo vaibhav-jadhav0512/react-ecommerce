@@ -8,3 +8,9 @@ export const saveProduct = async (token, product) => {
     { headers: { Authorization: `Bearer ${token}` } }
   );
 };
+
+export const getProducts = async (page, size) => {
+  return await axios.get(
+    `${process.env.REACT_APP_BACKEND_API}/get/product/${page}/${size}`
+  );
+};
